@@ -1,11 +1,17 @@
 /*
           .————————————.
-| Linear (analog) hall effect switch |
-| –                                - |
-| – ANALOG pin returns strength &.   |
-| – polarity of the magnetic field   |
-| – DIGITAL pin returns only the     |
-| – magnetic polarity of the field   |
+The KY-024 linear hall effect sensor is a type of magnetic sensor that measures the strength and direction 
+of a magnetic field. It works based on the Hall effect, which states that when a magnetic field is applied 
+perpendicular to a current-carrying conductor, a voltage is generated proportional to the magnetic field strength.
+
+The KY-024 sensor is used in various applications, including linear positioning, linear speed sensing, and linear current sensing. 
+It's a compact, low-cost, and easy-to-use device that can interface with microcontrollers like Arduino and Raspberry Pi.
+
+The KY-024 sensor outputs an analog voltage signal proportional to the strength of the magnetic field it's exposed to, 
+making it easy to read and process the data. Additionally, it has a linear response to the magnetic field, 
+meaning that the output voltage changes linearly with the magnetic field strength, making it ideal for applications 
+that require accurate and reliable measurements.
+
 | – You MUST set the pinMode of BOTH |
 | – the analog and digital pins,     |
 | – Otherwise dig_val is ALWAYS == 0 |
