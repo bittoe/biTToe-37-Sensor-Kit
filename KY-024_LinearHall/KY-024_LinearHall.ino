@@ -30,21 +30,42 @@
  * | – Otherwise ky024_Dval is ALWAYS == 0 |/
 
  * Comments by biTToe:
- * It is more reliable than a mechanical switch.
- * The cool thing about this switch is that it has two sensors:
- * The analog sensor returns both field strength and polarity
- * The digital sensor returns only polarity.
  *
  * With no magnet nearby:
  * the analog value is ~512 | range 0 – 1023 ideally
  * The digital value is 0 (LOW) by defaut
+ *
  * For the FRONT side of the sensor:
  * As the NORTH pole of a magnet approaches the FRONT side of the sensor
  * the ANALOG output value INCREASES (>512) and the DIGITAL output is 0 (LOW).
+ *
  * As the SOUTH pole of a magnet approaches the FRONT side of the sensor
  * the ANALOG output value DECREASES (<512) and the DIGITAL output is 1 (HIGH).
+ *
  * For the BACK side of the sensor it is just the opposite.
  * Get a magnet and play around.
+ *
+ ** N.B.
+ *
+ * There are seven sensors in this kit that have 
+ * a red PCB and a blue potentiometer
+ * KY-024 LinearHall  | KY-036 TouchSensor
+ * KY-025 ReedSwitch  | KY-037 BigSoundSensor
+ * KY-026 FlameSensor | KY-038 SmallSoundSensor
+ * KY-027 LightCup
+ *
+ * They all function in exactly the same way and use exactly the same code,
+ * albeit with different variable names. They have two output pins: digital and analog.
+ * The analog pin values range from 0 to 1023
+ * These are sensors that detects a physical signal: noise, heat, magnetic field... etc
+ * Each sensor has a limited range of detection and assigns 0 to no signal.
+ * and 1023 to the strongest signal. They are not calibrated in any meaningfuly way.
+ * They are detectors as opposed to calibrated sensors; their outputs are not meant to
+ * be converted to functional units (dB, degrees, lumens, Teslas... etc)
+ *
+ * With the exception of the magnetic sensors (KY-024 & KY-025) all of these 
+ * sensors can function like a thermostat as illustrated below.
+ * o
  *
  * This project uses: 
  * One Digital pin to INPUT (Polarity)
@@ -87,10 +108,10 @@ void loop() {
    * Uncomment the five Serial.print lines below
    * This information is also useful during calibration
   */
-  // Serial.print("Digital Value: ");
-  // Serial.println(ky024_Dval);
-  // Serial.print("Analog value: ");
-  // Serial.println(ky024_Aval);
-  // Serial.print("\n\n");
-  delay(1000);
+  Serial.print("Digital Value: ");
+  Serial.println(ky024_Dval);
+  Serial.print("Analog value: ");
+  Serial.println(ky024_Aval);
+  Serial.print("\n\n");
+  delay(250);
 }
