@@ -24,13 +24,9 @@
  * Additionally, it has a linear response to the magnetic field, meaning that the
  * output voltage changes linearly with the magnetic field strength, making it ideal for
  * applications that require accurate and reliable measurements.
- *
- * | – You MUST set the pinMode of BOTH    |\
- * | – the analog and digital pins,        | > Aparently this is NOT true
- * | – Otherwise ky024_Dval is ALWAYS == 0 |/
-
+ 
  * Comments by biTToe:
-
+ *
  * Each sensor is equipped with:
  * Two output pins: digital (DO) and analog (AO).
  * Two on-board LEDs: Power (LED1) & Threshold (LED2)
@@ -47,17 +43,17 @@
  * LED2 is OFF
  *
  * For the TOP of the sensor:
- * As the NORTH pole of a magnet approaches the TOP/FRONT of the sensor
+ * As the NORTH POLE of a magnet approaches the TOP/FRONT side of the sensor
  ** the ANALOG output INCREASES (AO > 512) 
  ** the DIGITAL output is 0 (DO == 0).
  ** LED2 is OFF
  *
- * As the NORTH pole of a magnet approaches the BOTTOM/BACK side of the sensor
+ * As the NORTH POLE of a magnet approaches the BOTTOM/BACK side of the sensor
  ** the ANALOG output DECREASES (AO < 512)
  ** the DIGITAL output is 1 (DO == 1).
  ** LED2 is ON
  *
- * For the BACK side of the sensor it is just the opposite.
+ * With the SOUTH POLE of the magnet the above outputs are reversed.
  * Get a magnet and play around.
  *
  ** N.B.
@@ -86,7 +82,8 @@
  * When the intensity of the signal is LESS than the set threshold:
  * DO == 0, AO > 500, LED2 is OFF
  
- * The analog pin output is a range from 0 to 1023  * The digital pin output (DO) is either 0 or 1
+ * The analog pin output (AO) is a range from 0 to 1023  
+ * The digital pin output (DO) is either 0 or 1
  * These are sensors that detects a physical signal: noise, heat, magnetic field... etc
  * Each sensor has a limited range of detection and assigns 0 to no signal.
  * and 1023 to the strongest signal. They are not calibrated in any meaningfuly way.
@@ -94,7 +91,7 @@
  * be converted to functional units (dB, degrees, lumens, Teslas... etc)
  *
  * This project uses: 
- * One Digital pin to INPUT (Polarity)
+ * One Digital pin to OUTPUT (HIGH or LOW)
  * One Analog pin to OUTPUT (Magnetic field strength & polarity)
  * The onboard LED
  * On the Hero (Arduino Uno compatible) we *could* use: D0-D13, A0-A5.
@@ -136,9 +133,9 @@ void loop() {
    * This information is also useful during calibration
    */
   // Serial.print("Digital Value: ");
-  // Serial.println(ky024_Dval);
+  // Serial.print(ky024_Dval);
+  // Serial.print(" | ");
   // Serial.print("Analog value: ");
   // Serial.println(ky024_Aval);
-  // Serial.print("\n\n");
 
 }
