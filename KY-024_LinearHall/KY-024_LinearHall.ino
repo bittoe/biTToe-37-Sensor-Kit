@@ -30,22 +30,41 @@
  * | – Otherwise ky024_Dval is ALWAYS == 0 |/
 
  * Comments by biTToe:
+
+ * Each sensor is equipped with:
+ * Two output pins: digital (DO) and analog (AO).
+ * Two on-board LEDs: Power (LED1) & Threshold (LED2)
+ *
+ * When the intensity of the signal is GREATER than the set threshold:
+ ** DO == 1, AO < 500, LED2 is ON
+ * When the intensity of the signal is LESS than the set threshold:
+ ** DO == 0, AO > 500, LED2 is OFF
+ * KY-024 is sensitive to BOTH fiels strenght and polarity
  *
  * With no magnet nearby:
- * the analog value is ~512 | range 0 – 1023 ideally
- * The digital value is 0 (LOW) by defaut
+ * the analog output (AO) is ~512
+ * The digital output (DO) is 0
+ * LED2 is OFF
  *
- * For the FRONT side of the sensor:
- * As the NORTH pole of a magnet approaches the FRONT side of the sensor
- * the ANALOG output value INCREASES (>512) and the DIGITAL output is 0 (LOW).
+ * For the TOP of the sensor:
+ * As the NORTH pole of a magnet approaches the TOP/FRONT of the sensor
+ ** the ANALOG output INCREASES (AO > 512) 
+ ** the DIGITAL output is 0 (DO == 0).
+ ** LED2 is OFF
  *
- * As the SOUTH pole of a magnet approaches the FRONT side of the sensor
- * the ANALOG output value DECREASES (<512) and the DIGITAL output is 1 (HIGH).
+ * As the NORTH pole of a magnet approaches the BOTTOM/BACK side of the sensor
+ ** the ANALOG output DECREASES (AO < 512)
+ ** the DIGITAL output is 1 (DO == 1).
+ ** LED2 is ON
  *
  * For the BACK side of the sensor it is just the opposite.
  * Get a magnet and play around.
  *
  ** N.B.
+ *
+ * You can use HIGH, 1, true interchangably
+ * You can use LOW, 0, false interchangably
+ * but you should be consistent
  *
  * There are seven sensors in this kit that have 
  * a red PCB and a blue potentiometer
@@ -55,17 +74,24 @@
  * KY-027 LightCup
  *
  * They all function in exactly the same way and use exactly the same code,
- * albeit with different variable names. They have two output pins: digital and analog.
- * The analog pin values range from 0 to 1023
+ * albeit with different variable names. 
+ *
+ * Each sensor is equipped with:
+ * two output pins: digital (DO) and analog (AO).
+ * Two on-board LEDs: Power (LED1) & Threshold (LED2)
+
+ * When the intensity of the signal is GREATER than the set threshold:
+ * DO == 1, AO < 500, LED2 is ON
+ 
+ * When the intensity of the signal is LESS than the set threshold:
+ * DO == 0, AO > 500, LED2 is OFF
+ 
+ * The analog pin output is a range from 0 to 1023  * The digital pin output (DO) is either 0 or 1
  * These are sensors that detects a physical signal: noise, heat, magnetic field... etc
  * Each sensor has a limited range of detection and assigns 0 to no signal.
  * and 1023 to the strongest signal. They are not calibrated in any meaningfuly way.
  * They are detectors as opposed to calibrated sensors; their outputs are not meant to
  * be converted to functional units (dB, degrees, lumens, Teslas... etc)
- *
- * With the exception of the magnetic sensors (KY-024 & KY-025) all of these 
- * sensors can function like a thermostat as illustrated below.
- * o
  *
  * This project uses: 
  * One Digital pin to INPUT (Polarity)
@@ -96,22 +122,23 @@ void setup() {
 void loop() {
   ky024_Dval = digitalRead(KY_024_DIGITAL_OUT); // Reads digital value & sets pin as input
   ky024_Aval = analogRead(KY_024_ANALOG_OUT);   // Reads analog value & sets pin as input
-  if (ky024_Dval == HIGH)                       // (S) on FRONT or (N) on BACK of sensor
+  if (ky024_Dval == HIGH)  // (S) on FRONT or (N) on BACK of sensor
   {
     digitalWrite(LED_BUILTIN, HIGH);
-  } else                                        // (N) on the FRONT or (S) on the BACK of sensor
+  } else                   // (N) on the FRONT or (S) on the BACK of sensor
   {
     digitalWrite(LED_BUILTIN, LOW);
   }
-   /*
-   *To see what the sensor is writing to the Hero board
-   * Uncomment the five Serial.print lines below
+  delay(150);  // change this value to pole the sensor more or less often
+  /*
+   * To see what the sensor is writing to the Hero board
+   * Uncomment the Serial.print lines below
    * This information is also useful during calibration
-  */
-  Serial.print("Digital Value: ");
-  Serial.println(ky024_Dval);
-  Serial.print("Analog value: ");
-  Serial.println(ky024_Aval);
-  Serial.print("\n\n");
-  delay(250);
+   */
+  // Serial.print("Digital Value: ");
+  // Serial.println(ky024_Dval);
+  // Serial.print("Analog value: ");
+  // Serial.println(ky024_Aval);
+  // Serial.print("\n\n");
+
 }
